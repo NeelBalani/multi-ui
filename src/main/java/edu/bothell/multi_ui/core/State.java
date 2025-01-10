@@ -1,34 +1,20 @@
 package edu.bothell.multi_ui.core;
-
 import java.util.Arrays;
-
 public class State implements Statable<int[]> {
-    public final char[][]   S = new char[32][48];
-    /*[][]//[64][96];
-    {
-        {' ',' ',' ',' ',' ',' '},
-        {' ',' ',' ',' ',' ',' '},
-        {' ',' ',' ',' ',' ',' '},
-        {' ',' ',' ',' ',' ',' '},
-        {' ',' ',' ',' ',' ',' '},
-        {' ',' ',' ',' ',' ',' '},
-        {' ',' ',' ',' ',' ',' '},
-        {' ',' ',' ',' ',' ',' '},
-        {' ',' ',' ',' ',' ',' '}
-    };/**/
+
+    public final char[][] S = new char[16][24];
 
     public State(){
         System.out.println("CREATING THE STATE...");
         for(char[] row: S)
-            for(int x = 0; x < row.length; x++)
-                row[x] = ' ';
+        for(int x = 0; x < row.length; x++)
+        row[x] = ' ';
     }
-
 
     public void setIt(char it, int x, int y){
         this.S[y][x] = it;
         System.out.println(Arrays.deepToString(S));
-    } 
+    }
 
     public char getIt(int x, int y){
         return S[y][x];
@@ -37,8 +23,6 @@ public class State implements Statable<int[]> {
     public char[][] getIt(){
         return S;
     }
-    
-    
 
     @Override
     public Object getIt(int[] pos){
@@ -54,6 +38,14 @@ public class State implements Statable<int[]> {
     public int[] getAdj(int x, int y, Directions d) {
         return new int[]{x + d.dX(), y + d.dY() };
     }
-    
-}
 
+    public int getVal(boolean x){
+        if(x) return S[0].length;
+        else return S.length;
+    }
+
+    public char getChar(int x, int y){
+        return S[y][x];
+    }
+
+}
