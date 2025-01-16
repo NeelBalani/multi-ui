@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "edu.bothell.multi_ui.App",
+            "projectName": "multi-ui"
+        },
+        {
             "type": "jdk",
             "request": "launch",
             "name": "Launch Java App"

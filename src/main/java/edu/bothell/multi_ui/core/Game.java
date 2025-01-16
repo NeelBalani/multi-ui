@@ -35,16 +35,18 @@ public class Game {
 
 
     public boolean isValid(int[] pos, String sId){
-        checkWin();
         System.out.println("isVAlid?"+s.getIt(pos)+"|" + sId+"|" + active.getSId()+"|");
         return s.isOpen(pos) && active.getSId().equals(sId);
     }
 
     public char play(int[] pos, String sId){
-        if(!isValid(pos, sId)) return ' ';
+        if(!isValid(pos, sId)) {
+            return ' ';
+        }
         turn++;
         this.s.setIt(active.getChar(), pos[0], pos[1]);
         this.active = p.get( turn % p.size() );
+        checkWin();
         return active.getChar();
     }
 
@@ -77,22 +79,68 @@ public class Game {
     }
 
     public void checkWin(){
-        if(checkVert() || checkHor()){
+        System.out.println(checkHor());
         System.out.println(checkVert());
-        System.out.println(checkHor()); 
+        System.out.println(checkTie());
+        System.out.println(checkDiagN());
+        System.out.println(checkDiagP());
+        if(checkVert() || checkHor()||checkTie()||checkDiagN()||checkDiagP()){
         System.exit(0);}
     }
 
+
+    public boolean checkDiagP(){
+        boolean checky = false;
+        int count = 0;
+
+        for(int i = 0; i < s.getVal(false); i++){
+            if(s.getChar(i, s.getVal(true) - 1 - i) == active.getChar()){
+                count++;
+                if(count == 4){
+                    checky = true;
+                    break;
+                }
+            }
+            else{
+                count = 0;
+                checky = false;
+            }
+        }
+        return checky;
+    }
+
+
+    public boolean checkDiagN(){
+
+        boolean checky = false;
+        int count = 0;
+
+        for(int i = 0; i < s.getVal(true); i++){
+                    if(s.getChar(i,i) == active.getChar()){
+                        count++;
+                        if(count == 4){
+                            checky = true;
+                            break;
+                        }
+                    }
+                    else{
+                        count = 0;
+                        checky = false;
+                    }
+                }
+        return checky;
+    }
+
     public boolean checkVert(){
-        boolean checky = true;
+        boolean checky = false;
         int count = 0;
         for(int i = 0; i < s.getVal(true); i++){
             checky = true;
             for(int o = 0; o < s.getVal(false); o++){
                 if(s.getChar(i, o) == active.getChar()){
                     count++;
-                    checky = true;
                     if(count == 4){
+                        checky = true;
                         break;
                     }
                 }
@@ -109,15 +157,17 @@ public class Game {
     }
 
     public boolean checkHor(){
-        boolean checky = true;
+        boolean checky = false;
         int count = 0;
         for(int i = 0; i < s.getVal(false); i++){
             checky = true;
             for(int o = 0; o < s.getVal(true); o++){
                 if(s.getChar(o, i) == active.getChar()){
-                    checky = true;
                     count++;
-                    if(count == 4) break;
+                    if(count == 4){ 
+                        checky = true;
+                        break;
+                    }
                 }
                 else{
                     count = 0;
@@ -131,82 +181,8 @@ public class Game {
         return checky;
     }
 
-    /*public boolean checkDiagN(){
-
-    boolean checky = true;
-
-    int count = 0;
-
-    for(int i = 0; i < s.getVal(true); i++){
-
-    for(int o = 0; o < s.getVal(false); o++){
-
-    checky = true;
-
-    if(s.getChar(i, o) != active.getChar()){
-
-    checky = false;
-
-    count = 0;
-
-    break;
-
-    }
-
-    count++;
-
-    if(count == 4){
-
-    return true;
-
-    }
-
-    }
-
-    }
-
-    return checky;
-
-    }
-
-    /*public boolean checkHor(){
-
-    boolean checky = true;
-
-    int count = 0;
-
-    for(int i = 0; i < s.getVal(true); i++){
-
-    checky = true;
-
-    for(int o = 0; o < s.getVal(false); o++){
-
-    if(s.getChar(i, o) != active.getChar()){
-
-    checky = false;
-
-    break;
-
-    }
-
-    count++;
-
-    if(count == 4){
-
-    return true;
-
-    }
-
-    }
-
-    }
-
-    return checky;
-
-    }*/
-
     public boolean checkTie(){
-        if(turn == 16*24){
+        if(turn == s.getSize()){
             return true;
         }
         return false;

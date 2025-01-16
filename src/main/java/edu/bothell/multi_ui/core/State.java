@@ -2,13 +2,17 @@ package edu.bothell.multi_ui.core;
 import java.util.Arrays;
 public class State implements Statable<int[]> {
 
-    public final char[][] S = new char[16][24];
+    public final char[][] S = new char[16][16];
 
     public State(){
         System.out.println("CREATING THE STATE...");
         for(char[] row: S)
         for(int x = 0; x < row.length; x++)
         row[x] = ' ';
+    }
+
+    public int getSize(){
+        return S.length * S[0].length;
     }
 
     public void setIt(char it, int x, int y){
